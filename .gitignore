@@ -1,0 +1,46 @@
+# Excluir versiones previas (solo publicamos v9/index.html)
+veleta-pagina-v1-*.html
+veleta-pagina-v2-*.html
+veleta-pagina-v3-*.html
+veleta-pagina-v4-*.html
+veleta-pagina-v5-*.html
+veleta-pagina-v6-*.html
+veleta-pagina-v7-*.html
+veleta-pagina-v8-*.html
+veleta-pagina-final-*.html
+
+# Excluir downloads fallidos
+assets/feed/.failed-downloads/
+
+# Excluir imágenes privadas que no se usan en v9
+assets/veleta/jimena-progreso-15may.jpg
+assets/veleta/veleta-logo-original.svg
+assets/veleta/veleta-logo-optimized.jpg
+assets/veleta/mexico-*.jpg
+assets/bordado/
+
+# Excluir crops viejos del screenshot
+assets/feed/feed-grid-completo.jpg
+assets/feed/feed-grid-top.jpg
+assets/feed/hero-geometric-panels.jpg
+assets/feed/paracaidas-veleta-logo.jpg
+assets/feed/playa-caballo.jpg
+assets/feed/tie-dye-rosa.jpg
+assets/feed/tote-arena.jpg
+assets/feed/mujer-cdmx.jpg
+assets/feed/aniversario-5anos.jpg
+assets/feed/veleta-2025-tela.jpg
+assets/feed/individuales/06-jan-2026.jpg
+assets/feed/individuales/08-veleta-2025-numeros.jpg
+assets/feed/individuales/11-5anos-aniversario.jpg
+
+# Excluir fotos individuales que v9 no usa
+# (mantener solo: 01, 02, 03, 04, 05, 07, 09, 10, 12)
+
+# Excluir generated svg previos (no usados ya)
+assets/generated/wave-divider-*.svg
+
+# Misc
+.DS_Store
+*.log
+node_modules/

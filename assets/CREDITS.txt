@@ -1,0 +1,83 @@
+Veleta · página v4 · créditos de assets
+========================================
+
+assets/feed/
+  feed-grid-completo.jpg     · Recorte del screenshot full-page del IG @veletamx tomado 2026-05-15 con chrome-devtools. Recorte vertical 2200x3300 del grid completo.
+  feed-grid-top.jpg          · Mismo screenshot, recorte 2200x1700 de las 2-3 filas superiores. Muestra logo "Veleta UPCYCLED MATERIALS" sobre paracaídas, mujer modelando en playa, mujer en CDMX, mujer con tote bag amarillo neón.
+  .failed-downloads/         · Intentos previos de descargar imágenes individuales del cdn de IG (fallaron por hot-link protection, 22 bytes ASCII). NO usadas en página.
+
+assets/veleta/
+  veleta-logo-original.svg   · Logo principal SVG entregado por Pedro 2026-05-11 (incluye swatches de marca como rectángulos fuera del viewport).
+  veleta-logo.png            · Render PNG del logo, 55K.
+  veleta-logo-optimized.jpg  · Versión web 1200px, 56K.
+  mexico-v9-brush.jpg ... v25.jpg · Variantes manuscritas del logotipo "México" (proyecto paralelo, NO usadas en v4).
+  jimena-progreso-15may.jpg  · Foto enviada por Jimena en WhatsApp 2026-05-15 (NO usada en v4, demasiado UI-specific).
+
+assets/bordado/
+  detalle-top.png            · Detalle del bordado alta res.
+  detalle-uniones.png        · Detalle de uniones del bordado alta res (USADA en sección "Historia" de v4).
+  detalle-stem.jpg           · Detalle tallo bordado.
+  detalle-baseline.jpg       · Línea base bordado.
+  ref-top.png                · Referencia top.
+
+Paleta de marca extraída del SVG del logo (veleta_logo-original.svg):
+  #F5DEAF  crema cálido (fondo base)
+  #87D1D3  cyan pastel  (acento frío)
+  #F37321  naranja      (acento cálido / CTA)
+  #231F20  tinta        (texto)
+  #FFFFFF  blanco
+
+Paleta derivada para v4:
+  #FAF6EC  papel principal (crema más claro, derivado de F5DEAF)
+  #F5F1E5  papel secundario
+  #ECE4D0  papel sombra
+  #1A1715  tinta cálida (derivada de 231F20)
+  #6B6258  tinta secundaria warm gray
+  #9C9285  tinta terciaria
+  + brand orange/cyan/cream según logo
+
+Tipografías v4 (todas Google Fonts gratis, NO Inter):
+  Mona Sans (GitHub Primer) — body, sans humanístico variable
+  Hubot Sans (GitHub Primer) — display, geom expanded variable
+  JetBrains Mono — metadata, monospace
+  Fraunces — italic dosis homeopática para acentos (variable opsz + SOFT + WONK)
+
+Inspiración referencial estudiada en proceso v4:
+  theplastiki.com (referencia que Jimena pidió)
+  Linear, Vercel.com (Geist redesign), Raycast, Stripe
+  Refactoring UI (Wathan + Schoger)
+  Emil Kowalski animations rules
+  Rauno Freiberg craft principles
+
+Decisiones de craft tomadas a propósito en v4:
+  - Sin Inter. Sin Lucide. Sin rounded-lg default. Sin gradient violet/indigo.
+  - Radius con propósito: 4px badges, 8px botones, 12px cards, 0 fotos.
+  - Spacing asimétrico: 4/8/12/20/32/48/72/120 (no múltiplos estrictos de 4).
+  - Sombras 2-layer cálidas (tinted in cream).
+  - Easings custom: cubic-bezier(0.2, 0.6, 0.3, 1) ease-out + (0.4, 0, 0.2, 1) ease-in-out.
+  - Duraciones <300ms (120/180/280/380).
+  - Solo transform/opacity en animaciones.
+  - Letter-by-letter stagger en hero (60ms apart).
+  - Grain SVG noise sobre el papel.
+  - ::selection brand orange, scrollbar custom.
+  - focus-visible diseñado con orange outline-offset.
+  - Skip link a11y.
+  - prefers-reduced-motion respetado.
+  - theme-color meta dinámico claro/dark.
+  - favicon SVG inline.
+  - Tabular nums en estadísticas (font-feature-settings 'tnum').
+  - Bilingüe ES/EN paralelo con separador "…" (estilo IG real).
+  - HTML5 semántico (header, main, section, article, aside, footer).
+  - aria-labels en CTAs, alt en todas las imágenes.
+
+Decisiones NO tomadas (justificación):
+  - Sin glassmorphism: el brand es cálido-deportivo, no premium-glass.
+  - Sin gradient violet-indigo: paleta brand real (orange + cyan + cream).
+  - Sin cards-everywhere: layouts asimétricos con stories alternados.
+  - Sin hero centrado con 2 botones: hero asimétrico izquierda/derecha con stats y badges.
+  - Sin Lucide icons: símbolos tipográficos (·, →, ❦ omitido) y SVG inline minimal.
+
+Imágenes intencionalmente NO incluidas en v4:
+  - assets/veleta/mexico-v*.jpg: el "México bordado" es subproyecto, no core brand.
+  - assets/veleta/jimena-progreso-15may.jpg: foto privada de chat, no para sitio público.
+  - Imágenes individuales del feed IG: cdn bloquea hot-link. Solución: recorte del screenshot full-page como ventana al feed.

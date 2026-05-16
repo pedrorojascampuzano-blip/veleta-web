@@ -1,0 +1,1551 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Veleta · Lo que cruzó el viento, vuelve a navegar</title>
+<meta name="description" content="Veleta · upcycling moda sostenible. Rescatamos parapentes, kites, paracaídas, velas y wetsuits. CDMX, desde 2020.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F37321'/%3E%3Ctext x='50' y='73' font-family='Georgia,serif' font-style='italic' font-size='72' font-weight='800' text-anchor='middle' fill='%23FFFFFF'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Rubik = misma tipografía que theplastiki.com · Sofia Sans body alt a sofia-pro · JetBrains Mono metadata -->
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Sofia+Sans:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS (Plastiki-inspired + Veleta brand) ============ */
+  :root {
+    --black:        #000000;
+    --tinta:        #1A1715;
+    --tinta-2:      #2D3748;   /* mismo que Plastiki body color */
+    --tinta-3:      #4A5568;
+    --tinta-4:      #718096;
+    --paper:        #FFFFFF;
+    --paper-2:      #F7FAFC;
+    --paper-warm:   #F9EDBE;   /* mismo cream warm que Plastiki */
+    --brand-orange: #F37321;
+    --brand-orange-dark: #D45A12;
+    --brand-cyan:   #87D1D3;   /* brand Veleta = igual de pastel que el Plastiki transition bg */
+    --brand-cyan-dark: #1F7B7D;
+    --navy-accent:  #0D405E;   /* mismo deep navy que section labels Plastiki */
+    --sky-accent:   #48A1D5;   /* sky blue de Plastiki, secundario */
+    --hair:         rgba(26, 23, 21, 0.10);
+
+    --f-display: "Rubik", -apple-system, system-ui, sans-serif;
+    --f-body:    "Sofia Sans", "Rubik", -apple-system, system-ui, sans-serif;
+    --f-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+    --ease-out: cubic-bezier(0.2, 0.6, 0.3, 1);
+    --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--black); }
+  body {
+    background: var(--black);
+    color: var(--tinta-2);
+    font-family: var(--f-body);
+    font-size: 18px;
+    line-height: 1.62;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  ::selection { background: var(--brand-orange); color: white; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: var(--tinta-4); border: 2px solid var(--paper); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--tinta-3); }
+
+  :focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; border-radius: 4px; }
+  :focus:not(:focus-visible) { outline: none; }
+
+  .skip {
+    position: absolute; left: -9999px;
+    background: var(--tinta); color: white;
+    padding: 12px 20px;
+    font-family: var(--f-mono);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    z-index: 999;
+  }
+  .skip:focus { left: 20px; top: 20px; }
+
+  /* ============ NAV (transparente sobre intro, sólido después) ============ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 18px clamp(20px, 4vw, 56px);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px;
+    color: white;
+    transition: background 300ms var(--ease-out), color 300ms var(--ease-out), backdrop-filter 300ms var(--ease-out);
+  }
+  .nav.solid {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px) saturate(160%);
+    color: var(--tinta);
+    border-bottom: 1px solid var(--hair);
+  }
+  .nav__logo {
+    height: 26px;
+    display: inline-flex; align-items: center;
+  }
+  .nav__logo img {
+    height: 100%;
+    width: auto;
+    transition: filter 250ms var(--ease-out);
+  }
+  /* Logo blanco sobre intro negro, oscuro sobre nav solid */
+  .nav__logo img { filter: brightness(0) invert(1); }
+  .nav.solid .nav__logo img { filter: none; }
+  .nav__menu { display: flex; gap: clamp(16px, 2.6vw, 36px); }
+  .nav__menu a {
+    font-family: var(--f-display);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: currentColor;
+    opacity: 0.92;
+    transition: opacity 120ms var(--ease-out), color 120ms var(--ease-out);
+  }
+  .nav__menu a:hover { color: var(--brand-orange); opacity: 1; }
+  .nav__cta {
+    font-family: var(--f-display);
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 500;
+    background: var(--brand-orange);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 4px;
+    transition: background 120ms var(--ease-out), transform 120ms var(--ease-out);
+  }
+  .nav__cta:hover { background: var(--brand-orange-dark); transform: translateY(-1px); }
+  @media (max-width: 720px) { .nav__menu { display: none; } }
+
+  /* ============ INTRO EXPERIENCE (Plastiki style, 5 viewports black) ============ */
+  .intro {
+    background: var(--black);
+    color: white;
+    position: relative;
+  }
+  .intro__line {
+    position: absolute;
+    top: 0; right: 12vw;
+    width: 200px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .intro__line svg {
+    width: 100%; height: 100%;
+    overflow: visible;
+  }
+  .intro__line path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.6);
+    stroke-width: 2;
+    stroke-dasharray: 6 8;
+    stroke-linecap: round;
+  }
+  .intro__line .blue {
+    stroke: var(--sky-accent);
+    stroke-width: 3;
+    stroke-dasharray: none;
+    opacity: 0.85;
+  }
+
+  .frame {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .frame__img {
+    position: absolute; inset: 0;
+    z-index: 0;
+  }
+  .frame__img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.55;
+  }
+  .frame__img::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.4) 100%);
+  }
+  .frame__content {
+    position: relative; z-index: 2;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 100px clamp(20px, 4vw, 56px) 80px;
+  }
+  .frame__eyebrow {
+    font-family: var(--f-display);
+    font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 400;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 24px;
+  }
+  .frame__headline {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(36px, 7vw, 96px);
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: white;
+    max-width: 14ch;
+  }
+  .frame__headline .big {
+    display: block;
+    font-size: clamp(56px, 12vw, 160px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 0.92;
+    margin-bottom: 0.08em;
+  }
+  .frame__headline .accent { color: var(--brand-orange); }
+
+  .frame__cta {
+    margin-top: 48px;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--sky-accent);
+    color: white;
+    padding: 16px 28px;
+    border-radius: 4px;
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    transition: transform 120ms var(--ease-out), background 120ms var(--ease-out);
+  }
+  .frame__cta:hover { background: var(--brand-cyan-dark); transform: translateY(-2px); }
+
+  /* ============ TRANSITION (cyan brand, igual que Plastiki) ============ */
+  .transition {
+    background: var(--brand-cyan);
+    color: white;
+    padding: clamp(80px, 12vw, 160px) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  /* LOGO BRAND grande arriba de la transición · reveal moment */
+  .transition__brand {
+    max-width: 1280px;
+    margin: 0 auto clamp(48px, 6vw, 96px);
+    padding: 0 clamp(20px, 4vw, 56px);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 24px;
+  }
+  .transition__brand-logo {
+    width: clamp(280px, 50vw, 640px);
+  }
+  .transition__brand-logo img {
+    width: 100%; height: auto;
+    filter: brightness(0) invert(1);
+  }
+  .transition__brand-tagline {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+  }
+  .transition__brand-tagline .dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: white;
+    margin: 0 12px 3px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  .transition__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+    display: grid;
+    gap: clamp(40px, 6vw, 80px);
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  @media (min-width: 920px) { .transition__inner { grid-template-columns: 1fr 1fr; } }
+  .transition__text { padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.5); max-width: 14ch; }
+  .transition__title {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: white;
+  }
+  .transition__sub {
+    margin-top: 24px;
+    font-family: var(--f-body);
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    max-width: 28ch;
+    line-height: 1.5;
+  }
+
+  /* ============ MAGAZINE SECTIONS ============ */
+  .section {
+    background: var(--paper);
+    color: var(--tinta-2);
+    padding: clamp(72px, 10vw, 140px) 0;
+  }
+  .section--cream { background: var(--paper-warm); }
+  .section__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .section__num {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--navy-accent);
+    margin-bottom: 8px;
+  }
+  .section__num .label {
+    display: block;
+    margin-top: 4px;
+  }
+  .section__hr {
+    width: 64px; height: 2px;
+    background: var(--navy-accent);
+    margin: 16px 0 32px;
+  }
+  .section__grid {
+    display: grid;
+    gap: clamp(32px, 5vw, 72px);
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  @media (min-width: 920px) {
+    .section__grid { grid-template-columns: 1fr 1fr; }
+    .section--reverse .section__grid > :first-child { grid-column: 2; }
+    .section--reverse .section__grid > :last-child { grid-column: 1; grid-row: 1; }
+  }
+  .section__head {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.8vw, 44px);
+    line-height: 1.12;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--tinta-2);
+    margin-bottom: 24px;
+  }
+  .section__head .accent { color: var(--sky-accent); }
+  .section__body p {
+    font-size: 18px;
+    line-height: 1.62;
+    color: var(--tinta-2);
+    margin-bottom: 1em;
+    max-width: 56ch;
+  }
+  .section__body p strong { color: var(--tinta); font-weight: 600; }
+  .section__body .by {
+    font-family: var(--f-display);
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--tinta-4);
+    margin-bottom: 24px;
+  }
+  .section__media {
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--tinta-2);
+    position: relative;
+  }
+  .section__media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.6s var(--ease-out);
+  }
+  .section__media:hover img { transform: scale(1.04); }
+  .section__media .stamp {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(0,0,0,0.78);
+    color: white;
+    font-family: var(--f-mono);
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 3px;
+    backdrop-filter: blur(8px);
+  }
+  .section__media .stamp .accent { color: var(--brand-orange); }
+
+  /* ============ PLEDGE BANNER (igual estilo Plastiki) ============ */
+  .pledge {
+    background: var(--paper);
+    padding: clamp(60px, 8vw, 120px) 0;
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  .pledge__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 32px;
+  }
+  .pledge__text {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.3;
+    color: var(--tinta-2);
+    max-width: 36ch;
+  }
+  .pledge__text .accent {
+    color: var(--brand-orange);
+    font-weight: 500;
+  }
+  .pledge__btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--sky-accent);
+    color: white;
+    padding: 16px 28px;
+    border-radius: 4px;
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    transition: transform 120ms var(--ease-out), background 120ms var(--ease-out);
+  }
+  .pledge__btn:hover { background: var(--brand-cyan-dark); transform: translateY(-2px); }
+
+  /* ============ NUMBERS section (sec 03) ============ */
+  .numbers__head {
+    margin-bottom: 48px;
+  }
+  .numbers__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(32px, 4vw, 56px);
+    border-top: 2px solid var(--navy-accent);
+    padding-top: 40px;
+  }
+  @media (min-width: 720px) { .numbers__grid { grid-template-columns: repeat(4, 1fr); } }
+  .num-cell .big {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(56px, 8vw, 96px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--tinta-2);
+    font-feature-settings: "tnum" 1;
+  }
+  .num-cell .big .unit {
+    color: var(--sky-accent);
+    font-weight: 400;
+    font-size: 0.42em;
+    letter-spacing: 0.08em;
+    margin-left: 0.1em;
+  }
+  .num-cell .lab {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--navy-accent);
+    margin-top: 16px;
+  }
+  .num-cell .desc {
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-3);
+    margin-top: 8px;
+    max-width: 28ch;
+  }
+
+  /* ============ GALLERY ============ */
+  .gallery {
+    background: var(--paper-2);
+    padding: clamp(72px, 10vw, 140px) 0;
+  }
+  .gallery__head {
+    max-width: 1280px;
+    margin: 0 auto 48px;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .gallery__grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(8px, 1vw, 16px);
+  }
+  @media (min-width: 720px) { .gallery__grid { grid-template-columns: repeat(4, 1fr); } }
+  .gallery__item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--tinta-3);
+    border-radius: 2px;
+  }
+  .gallery__item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1s var(--ease-out), filter 250ms var(--ease-out);
+  }
+  .gallery__item:hover img { transform: scale(1.06); filter: brightness(1.05); }
+
+  /* ============ CTA FINAL ============ */
+  .cta {
+    background: var(--brand-orange);
+    color: white;
+    padding: clamp(72px, 10vw, 140px) 0;
+  }
+  .cta__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 4vw, 56px);
+    align-items: center;
+  }
+  @media (min-width: 920px) { .cta__inner { grid-template-columns: 1.4fr 1fr; } }
+  .cta__title {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: white;
+  }
+  .cta__title .accent { color: var(--tinta); }
+  .cta__body p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: white;
+    opacity: 0.94;
+    max-width: 44ch;
+    margin-top: 24px;
+  }
+  .cta__actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .cta__btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--tinta); color: white;
+    padding: 18px 28px;
+    border-radius: 4px;
+    font-family: var(--f-display);
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 500;
+    transition: transform 120ms var(--ease-out), background 120ms var(--ease-out);
+  }
+  .cta__btn:hover { background: #000; transform: translateY(-2px); }
+  .cta__btn.ghost { background: transparent; border: 1px solid white; }
+  .cta__btn.ghost:hover { background: white; color: var(--brand-orange); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--tinta-3);
+    color: white;
+    padding: 28px 0;
+    font-family: var(--f-display);
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  footer .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    align-items: center;
+  }
+  footer ul { list-style: none; display: flex; gap: clamp(14px, 2vw, 28px); flex-wrap: wrap; }
+  footer ul a { opacity: 0.85; transition: opacity 120ms var(--ease-out), color 120ms var(--ease-out); }
+  footer ul a:hover { opacity: 1; color: var(--brand-orange); }
+  footer .right { opacity: 0.65; font-size: 11px; }
+
+  /* ============ DIVIDERS espuma/arena (Gemini) ============ */
+  .wave-divider {
+    position: relative;
+    width: 100%;
+    display: block;
+    line-height: 0;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    overflow: hidden;
+  }
+  .wave-divider img {
+    width: 100%;
+    height: clamp(180px, 20vw, 320px);
+    object-fit: cover;
+    display: block;
+    margin: 0; padding: 0;
+  }
+  .wave-divider--flip img { transform: scaleY(-1); }
+  /* Gradient overlay top · extiende el color de la sección de arriba sobre el divider */
+  .wave-divider::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 45%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Gradient overlay bottom · blendea hacia el color de la sección de abajo */
+  .wave-divider::after {
+    content: "";
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 30%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Variantes por par de colores */
+  .wave-divider--cyan-white::before  { background: linear-gradient(to bottom, var(--brand-cyan) 0%, var(--brand-cyan) 35%, rgba(135,209,211,0) 100%); }
+  .wave-divider--cyan-white::after   { background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%); }
+
+  .wave-divider--cream-white::before { background: linear-gradient(to bottom, #F9EDBE 0%, #F9EDBE 35%, rgba(249,237,190,0) 100%); }
+  .wave-divider--cream-white::after  { background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%); }
+
+  .wave-divider--white-cream::before { background: linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 35%, rgba(255,255,255,0) 100%); }
+  .wave-divider--white-cream::after  { background: linear-gradient(to top, #F9EDBE 0%, rgba(249,237,190,0) 100%); }
+
+  /* ============ REVEAL ============ */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ============ CURSOR-VELETA (compás brújula) ============ */
+  /* Solo escondemos el cursor nativo CUANDO el JS confirma que la veleta está corriendo */
+  html.cursor-active,
+  html.cursor-active body,
+  html.cursor-active a,
+  html.cursor-active button,
+  html.cursor-active [role="button"] { cursor: none; }
+
+  .cursor-veleta {
+    position: fixed;
+    top: 0; left: 0;
+    width: 80px; height: 80px;
+    margin: -40px 0 0 -40px;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+    display: none;
+    opacity: 0;
+    transition: opacity 300ms var(--ease-out);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)) drop-shadow(0 0 0 rgba(0,0,0,0));
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cursor-veleta { display: block; }
+    html.cursor-active .cursor-veleta { opacity: 1; }
+  }
+  .cursor-veleta__rose {
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+  /* Compás completo, misma estética que la veleta gigante */
+  .cursor-veleta .ring-outer  { fill: none; stroke: #FFFFFF; stroke-width: 1.4; opacity: 0.92; }
+  .cursor-veleta .ring-inner  { fill: none; stroke: #FFFFFF; stroke-width: 0.7; opacity: 0.6; }
+  .cursor-veleta .ring-bg     { fill: rgba(26, 23, 21, 0.35); }
+  .cursor-veleta .arm-n       { fill: #F37321; }
+  .cursor-veleta .arm-s       { fill: #FFFFFF; opacity: 0.92; }
+  .cursor-veleta .arm-e,
+  .cursor-veleta .arm-w       { fill: #FFFFFF; opacity: 0.55; }
+  .cursor-veleta .core        { fill: #1A1715; }
+  .cursor-veleta .core-dot    { fill: #F37321; }
+  .cursor-veleta .cardinal    {
+    font-family: var(--f-mono); font-weight: 500;
+    font-size: 6.5px; letter-spacing: 0.08em;
+    fill: #FFFFFF; opacity: 0.88;
+    text-anchor: middle;
+  }
+  /* Hover state: cuando el cursor está sobre algo clickeable, la veleta enfatiza */
+  html.cursor-over-link .cursor-veleta { transform-origin: center; }
+  html.cursor-over-link .cursor-veleta .ring-bg { fill: rgba(243, 115, 33, 0.5); }
+  html.cursor-over-link .cursor-veleta .ring-outer { stroke: #F37321; opacity: 1; }
+
+  /* ============ VELETA GIGANTE EN TRANSITION ============ */
+  .veleta-giant {
+    width: clamp(220px, 32vw, 380px);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    position: relative;
+    cursor: none;
+  }
+  .veleta-giant svg { width: 100%; height: 100%; overflow: visible; }
+  .veleta-giant .pole { stroke: rgba(255,255,255,0.8); stroke-width: 1.5; }
+  .veleta-giant .base-pivot { fill: white; }
+  .veleta-giant .rose {
+    transform-origin: 50% 50%;
+    will-change: transform;
+    transition: filter 200ms var(--ease-out);
+  }
+  .veleta-giant:hover .rose { filter: drop-shadow(0 12px 28px rgba(0,0,0,0.22)); }
+  .veleta-giant .rose .arm-n { fill: var(--brand-orange); }
+  .veleta-giant .rose .arm-s { fill: white; opacity: 0.92; }
+  .veleta-giant .rose .arm-e,
+  .veleta-giant .rose .arm-w { fill: var(--tinta); opacity: 0.5; }
+  .veleta-giant .rose .ring-outer { stroke: var(--tinta); stroke-width: 1.5; fill: none; opacity: 0.5; }
+  .veleta-giant .rose .ring-inner { stroke: white; stroke-width: 0.8; fill: none; opacity: 0.6; }
+  .veleta-giant .rose .core { fill: var(--tinta); }
+  .veleta-giant .rose .cardinal {
+    font-family: var(--f-mono); font-weight: 500;
+    font-size: 6px; letter-spacing: 0.1em;
+    fill: var(--tinta); opacity: 0.75;
+    text-anchor: middle;
+  }
+  .veleta-giant__hint {
+    text-align: center;
+    margin-top: 24px;
+    font-family: var(--f-mono);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+  }
+  .veleta-giant__hint .glyph {
+    display: inline-block;
+    margin-right: 8px;
+    animation: hand-wave 2.6s var(--ease-io) infinite;
+  }
+  @keyframes hand-wave {
+    0%, 100% { transform: translateX(0) rotate(-8deg); }
+    50% { transform: translateX(6px) rotate(8deg); }
+  }
+
+  /* ============ MINI VELETAS FOOTER ============ */
+  .mini-veletas {
+    display: flex;
+    gap: clamp(10px, 1.5vw, 18px);
+    flex-wrap: wrap;
+    margin-top: 18px;
+    align-items: center;
+  }
+  .mini-veleta {
+    width: 26px; height: 26px;
+    opacity: 0.72;
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+  .mini-veleta:hover { opacity: 1; transform: scale(1.18); }
+  .mini-veleta svg { width: 100%; height: 100%; overflow: visible; }
+  .mini-veleta .rose {
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+  .mini-veleta .rose .arm-n { fill: var(--brand-orange); }
+  .mini-veleta .rose .arm-s { fill: white; opacity: 0.55; }
+  .mini-veleta .pole { stroke: white; stroke-width: 1; opacity: 0.55; }
+  .mini-veleta .pivot { fill: white; }
+  .mini-veleta__label {
+    font-family: var(--f-mono);
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+    text-align: center;
+  }
+  .mini-veleta__wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px;
+  }
+  /* ============ FOR GSAP WORD REVEAL ============ */
+  .reveal-words .word {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+</style>
+
+<!-- Lenis + GSAP + ScrollTrigger via CDN -->
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<a href="#main" class="skip">Saltar al contenido</a>
+
+<!-- CURSOR-VELETA · compás completo · rosa apunta a la dirección del cursor -->
+<div class="cursor-veleta" id="cursor-veleta" aria-hidden="true">
+  <svg viewBox="0 0 80 80">
+    <!-- Background tinted disk (improves contrast on any background) -->
+    <circle class="ring-bg" cx="40" cy="40" r="36"/>
+    <!-- ROSE (rotates) -->
+    <g class="cursor-veleta__rose" id="cursor-veleta-rose">
+      <!-- Outer ring -->
+      <circle class="ring-outer" cx="40" cy="40" r="34"/>
+      <circle class="ring-inner" cx="40" cy="40" r="28"/>
+
+      <!-- E/W small arms -->
+      <path class="arm-e" d="M 40 40 L 72 38 L 70 40 L 72 42 Z"/>
+      <path class="arm-w" d="M 40 40 L 8 38 L 10 40 L 8 42 Z"/>
+
+      <!-- South tail (white) -->
+      <path class="arm-s" d="M 40 40 L 44 70 L 40 64 L 36 70 Z"/>
+
+      <!-- North arrow (orange) - this is the visual pointer -->
+      <path class="arm-n" d="M 40 6 L 46 36 L 40 30 L 34 36 Z"/>
+
+      <!-- Cardinals -->
+      <text class="cardinal" x="40" y="4">N</text>
+      <text class="cardinal" x="40" y="78">S</text>
+      <text class="cardinal" x="78" y="42">E</text>
+      <text class="cardinal" x="2" y="42">W</text>
+
+      <!-- Core / pivot -->
+      <circle class="core" cx="40" cy="40" r="3.2"/>
+      <circle class="core-dot" cx="40" cy="40" r="1.4"/>
+    </g>
+  </svg>
+</div>
+
+<nav class="nav" id="nav" role="banner">
+  <a href="#top" class="nav__logo" aria-label="Veleta · inicio">
+    <img src="assets/veleta/veleta-logo.png" alt="Veleta">
+  </a>
+  <div class="nav__menu" aria-label="Navegación">
+    <a href="#origen">Origen</a>
+    <a href="#kite">Kite de Leo</a>
+    <a href="#numeros">Números</a>
+    <a href="#equipo">Equipo</a>
+  </div>
+  <a class="nav__cta" href="#navegar">Donar material ♻</a>
+</nav>
+
+<main id="main" tabindex="-1">
+
+<!-- INTRO EXPERIENCE (Plastiki-style, scroll storytelling black) -->
+<section class="intro" id="top" aria-label="La ruta de Veleta">
+
+  <!-- Decorative dotted journey line over all frames -->
+  <div class="intro__line" aria-hidden="true">
+    <svg viewBox="0 0 200 4000" preserveAspectRatio="none">
+      <path d="M 100 50 Q 60 600, 130 1100 T 80 2000 Q 140 2700, 90 3400 L 90 3950"/>
+      <path class="blue" d="M 160 200 Q 100 500, 170 900 T 120 1700"/>
+      <circle cx="100" cy="50" r="6" fill="white"/>
+    </svg>
+  </div>
+
+  <!-- Frame 01 -->
+  <article class="frame">
+    <div class="frame__img">
+      <img src="assets/feed/individuales/01-pinned-paracaidas-logo.jpg" alt="Paracaídas rojo amarillo y azul con logo Veleta UPCYCLED MATERIALS">
+    </div>
+    <div class="frame__content">
+      <p class="frame__eyebrow">¿Cómo le das otra vida a</p>
+      <h2 class="frame__headline">
+        <span class="big">188</span>
+        Materiales que cruzaron el viento?
+      </h2>
+    </div>
+  </article>
+
+  <!-- Frame 02 -->
+  <article class="frame">
+    <div class="frame__img">
+      <img src="assets/feed/individuales/07-kite-leo-labartino.jpg" alt="Detalle macro de equipo upcycled de Veleta, color amarillo neón">
+    </div>
+    <div class="frame__content">
+      <p class="frame__eyebrow">Empezamos rescatando</p>
+      <h2 class="frame__headline">
+        <span class="big">7 tipos</span>
+        de material en ruta al landfill
+      </h2>
+    </div>
+  </article>
+
+  <!-- Frame 03 -->
+  <article class="frame">
+    <div class="frame__img">
+      <img src="assets/feed/individuales/03-feb-2026-donkey-headscarf.jpg" alt="Modelo en playa al atardecer con prenda upcycled de Veleta">
+    </div>
+    <div class="frame__content">
+      <p class="frame__eyebrow">Le pusimos nombre y</p>
+      <h2 class="frame__headline">
+        <span class="big">Le dimos</span>
+        Una segunda navegación
+      </h2>
+    </div>
+  </article>
+
+  <!-- Frame 04 -->
+  <article class="frame">
+    <div class="frame__img">
+      <img src="assets/feed/individuales/04-feb-2026-contreras.jpg" alt="Modelo en CDMX con prenda Veleta upcycled, recargada sobre puerta de hierro">
+    </div>
+    <div class="frame__content">
+      <p class="frame__eyebrow">Desde 2020 navegando</p>
+      <h2 class="frame__headline">
+        <span class="big">de Colombia<br>a México<br>al mundo</span>
+      </h2>
+    </div>
+  </article>
+
+  <!-- Frame 05 = experience the journey · BRÚJULA EN MANO (Gemini) -->
+  <article class="frame" style="min-height: 90vh;">
+    <div class="frame__img">
+      <img src="assets/generated/brujula-mano-playa.jpg" alt="Mano sosteniendo una brújula brass vintage al atardecer sobre el mar">
+    </div>
+    <div class="frame__content">
+      <p class="frame__eyebrow">Lleva la ruta contigo</p>
+      <h2 class="frame__headline">
+        Experimenta<br>la <span style="font-style: italic; color: var(--brand-orange); font-weight: 500;">ruta</span>
+      </h2>
+      <a class="frame__cta" href="#transition">
+        Comienza ↓
+      </a>
+    </div>
+  </article>
+
+</section>
+
+<!-- TRANSITION (cyan brand) con LOGO BRAND + VELETA GIGANTE INTERACTIVA -->
+<section class="transition" id="transition">
+
+  <!-- Logo brand reveal · grande, centrado, sobre cyan -->
+  <div class="transition__brand reveal">
+    <div class="transition__brand-logo">
+      <img src="assets/veleta/veleta-logo.png" alt="Veleta">
+    </div>
+    <p class="transition__brand-tagline">
+      Upcycling moda sostenible <span class="dot"></span> CDMX <span class="dot"></span> Desde 2020
+    </p>
+  </div>
+
+  <div class="transition__inner">
+    <div>
+      <div class="veleta-giant" id="veleta-giant" aria-label="Veleta interactiva, mueve el cursor para girarla">
+        <svg viewBox="0 0 200 200" role="img">
+          <title>Veleta · mueve el cursor para indicar dirección</title>
+
+          <!-- Pole vertical (no rota) -->
+          <line class="pole" x1="100" y1="180" x2="100" y2="100"/>
+          <circle class="base-pivot" cx="100" cy="180" r="4"/>
+          <!-- base support -->
+          <line class="pole" x1="92" y1="178" x2="108" y2="178" stroke-width="2"/>
+
+          <!-- ROSE (this rotates) -->
+          <g class="rose" id="veleta-giant-rose">
+            <!-- outer ring -->
+            <circle class="ring-outer" cx="100" cy="100" r="84"/>
+            <circle class="ring-inner" cx="100" cy="100" r="74"/>
+
+            <!-- East / West small arms -->
+            <path class="arm-e" d="M 100 100 L 178 96 L 174 100 L 178 104 Z"/>
+            <path class="arm-w" d="M 100 100 L 22 96 L 26 100 L 22 104 Z"/>
+
+            <!-- South tail (white) -->
+            <path class="arm-s" d="M 100 100 L 110 168 L 100 158 L 90 168 Z"/>
+
+            <!-- North arrow (orange, the pointer) -->
+            <path class="arm-n" d="M 100 14 L 116 80 L 100 70 L 84 80 Z"/>
+
+            <!-- Cardinal letters -->
+            <text class="cardinal" x="100" y="9">N</text>
+            <text class="cardinal" x="100" y="196">S</text>
+            <text class="cardinal" x="194" y="103">E</text>
+            <text class="cardinal" x="6" y="103">W</text>
+
+            <!-- Core / pivot center -->
+            <circle class="core" cx="100" cy="100" r="5"/>
+            <circle cx="100" cy="100" r="2" fill="#F37321"/>
+          </g>
+        </svg>
+      </div>
+      <p class="veleta-giant__hint"><span class="glyph">↜</span> Mueve y mira hacia dónde sopla</p>
+    </div>
+    <div class="transition__text">
+      <h1 class="transition__title">
+        El viaje de Veleta apenas empieza.
+      </h1>
+      <p class="transition__sub">
+        Sailing towards a more sustainable route. Desde CDMX, desde 2020.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER · cyan → blanco · espuma de mar (Gemini foto top-down) -->
+<div class="wave-divider wave-divider--cyan-white" aria-hidden="true">
+  <img src="assets/generated/transicion-cyan-blanco.jpg" alt="">
+</div>
+
+<!-- 01 ORIGEN -->
+<section class="section" id="origen">
+  <div class="section__inner">
+    <div class="section__grid">
+      <div class="reveal">
+        <p class="section__num">01<span class="label">El proyecto</span></p>
+        <div class="section__hr"></div>
+        <h2 class="section__head">Le damos una segunda navegación a lo que <span class="accent">cruzó el viento</span></h2>
+        <div class="section__body">
+          <p class="by">Por Veleta · Ciudad de México · 2026</p>
+          <p>
+            Veleta es un proyecto de moda sostenible que nace en 2020 en la Ciudad de México. Rescatamos parapentes, kites, paracaídas, velas, wetsuits, cámaras de llanta y tiendas de campaña, y los transformamos en piezas que <strong>guardan la memoria del lugar donde fueron rescatados</strong>.
+          </p>
+          <p>
+            Cada pieza viene firmada con la coordenada de origen del material. No es una etiqueta. Es una bitácora.
+          </p>
+        </div>
+      </div>
+      <figure class="section__media reveal">
+        <img src="assets/feed/individuales/05-jan-2026-isaagvg.jpg" alt="Pieza upcycled de Veleta">
+        <span class="stamp"><span class="accent">Pieza</span> · Enero 2026</span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PLEDGE BANNER (igual al de Plastiki "Join the call..." con sky button) -->
+<section class="pledge">
+  <div class="pledge__inner">
+    <p class="pledge__text">
+      Tienes equipo retirado en tu casa o taller? <span class="accent">Dale otra ruta.</span>
+    </p>
+    <a class="pledge__btn" href="#navegar">
+      Donar material ♻
+    </a>
+  </div>
+</section>
+
+<!-- DIVIDER · blanco → cream · espuma sobre arena (Gemini foto flippeada) -->
+<div class="wave-divider wave-divider--white-cream wave-divider--flip" aria-hidden="true">
+  <img src="assets/generated/transicion-cream-blanco.jpg" alt="">
+</div>
+
+<!-- 02 KITE DE LEO -->
+<section class="section section--reverse section--cream" id="kite">
+  <div class="section__inner">
+    <div class="section__grid">
+      <figure class="section__media reveal">
+        <img src="assets/feed/individuales/07-kite-leo-labartino.jpg" alt="Macro del kite upcycled de Leo Labartino">
+        <span class="stamp"><span class="accent">Material</span> · 10 años de vuelo</span>
+      </figure>
+      <div class="reveal">
+        <p class="section__num">02<span class="label">Una historia</span></p>
+        <div class="section__hr"></div>
+        <h2 class="section__head">El kite de Leo voló <span class="accent">10 años</span> antes de ser una pieza</h2>
+        <div class="section__body">
+          <p class="by">Material rescatado · Colombia, México, Estados Unidos</p>
+          <p>
+            Este kite fue <strong>100% Dacron, 100% poliéster, 7 m²</strong> y voló más de diez años. Le enseñó a Leo Labartino a hacer kitesurf y lo llevó por Colombia, México y Estados Unidos. Cuando dejó de cumplir en el aire, su tela amarilla y negra empezó otra ruta.
+          </p>
+          <p>
+            Hoy es una pieza de Veleta. Y trae todo ese viaje adentro.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER · cream → blanco · espuma sobre arena (Gemini foto top-down) -->
+<div class="wave-divider wave-divider--cream-white" aria-hidden="true">
+  <img src="assets/generated/transicion-cream-blanco.jpg" alt="">
+</div>
+
+<!-- 03 NÚMEROS -->
+<section class="section" id="numeros">
+  <div class="section__inner">
+    <div class="numbers__head reveal">
+      <p class="section__num">03<span class="label">Veleta 2025</span></p>
+      <div class="section__hr"></div>
+      <h2 class="section__head">Lo que no <span class="accent">contamos</span>, no cuenta</h2>
+      <p style="max-width: 56ch; margin-top: 16px; color: var(--tinta-3); font-size: 17px; line-height: 1.55;">
+        Publicamos volumen, materiales y nombres cada año. Es nuestra forma de mantenernos en ruta.
+      </p>
+    </div>
+    <div class="numbers__grid reveal">
+      <div class="num-cell">
+        <div class="big">5<span class="unit">años</span></div>
+        <div class="lab">En operación</div>
+        <p class="desc">Desde 2020 en el Centro de CDMX, Artículo 123 #116.</p>
+      </div>
+      <div class="num-cell">
+        <div class="big">188</div>
+        <div class="lab">Piezas publicadas</div>
+        <p class="desc">En el feed real de @veletamx. Cada una con historia.</p>
+      </div>
+      <div class="num-cell">
+        <div class="big">7</div>
+        <div class="lab">Materiales rescatados</div>
+        <p class="desc">Parapentes, kites, paracaídas, velas, wetsuits, cámaras, tiendas.</p>
+      </div>
+      <div class="num-cell">
+        <div class="big">20<span class="unit">+</span></div>
+        <div class="lab">Manos en el taller</div>
+        <p class="desc">Veleta es colectivo. Existe gracias a muchxs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA (gallery sutil estilo Plastiki) -->
+<section class="gallery" id="equipo" aria-label="Piezas del feed">
+  <div class="gallery__head reveal">
+    <p class="section__num">04<span class="label">Galería</span></p>
+    <div class="section__hr"></div>
+    <h2 class="section__head">Las piezas, en su <span class="accent">salsa</span></h2>
+  </div>
+  <div class="gallery__grid reveal">
+    <figure class="gallery__item">
+      <img src="assets/feed/individuales/02-abril-2026-baby-bed.jpg" alt="Pieza Veleta abril 2026" loading="lazy">
+    </figure>
+    <figure class="gallery__item">
+      <img src="assets/feed/individuales/09-dic-2025.jpg" alt="Pieza Veleta diciembre 2025" loading="lazy">
+    </figure>
+    <figure class="gallery__item">
+      <img src="assets/feed/individuales/10-dic-2025-sheekita.jpg" alt="Colaboración Veleta diciembre 2025" loading="lazy">
+    </figure>
+    <figure class="gallery__item">
+      <img src="assets/feed/individuales/12-nov-2025.jpg" alt="Pieza Veleta noviembre 2025" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<!-- CTA FINAL DUAL -->
+<section class="cta" id="navegar">
+  <div class="cta__inner reveal">
+    <div class="cta__body">
+      <h2 class="cta__title">Navega <span class="accent">con nosotros</span></h2>
+      <p>
+        Si tienes parapente, kite, paracaídas, vela o wetsuit retirado, escríbenos. Si quieres una pieza, el catálogo vive en Instagram.
+      </p>
+    </div>
+    <div class="cta__actions">
+      <a class="cta__btn" href="mailto:navegar@veleta.com.mx?subject=Quiero%20donar%20material">
+        Donar material ♻
+      </a>
+      <a class="cta__btn ghost" href="https://www.instagram.com/veletamx/" target="_blank" rel="noopener">
+        Ver el feed @veletamx →
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="inner" style="flex-direction: column; align-items: flex-start; gap: 20px;">
+    <a href="#top" style="display: inline-block; height: 28px;">
+      <img src="assets/veleta/veleta-logo.png" alt="Veleta" style="height: 100%; width: auto; filter: brightness(0) invert(1);">
+    </a>
+    <ul>
+      <li><a href="#top">Inicio</a></li>
+      <li><a href="#origen">Origen</a></li>
+      <li><a href="#kite">Kite de Leo</a></li>
+      <li><a href="#numeros">Números</a></li>
+      <li><a href="#navegar">Donar</a></li>
+      <li><a href="https://www.instagram.com/veletamx/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+
+    <!-- MINI-VELETAS · una por cada material, oscilando con offsets distintos -->
+    <div class="mini-veletas" aria-label="Materiales que reusamos">
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="0">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Parapente</span>
+      </div>
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="1">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Paracaídas</span>
+      </div>
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="2">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Kite</span>
+      </div>
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="3">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Vela</span>
+      </div>
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="4">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Wetsuit</span>
+      </div>
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="5">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Llanta</span>
+      </div>
+      <div class="mini-veleta__wrap">
+        <span class="mini-veleta" data-veleta-idle="6">
+          <svg viewBox="0 0 32 32"><line class="pole" x1="16" y1="30" x2="16" y2="16"/><circle class="pivot" cx="16" cy="30" r="1.6"/><g class="rose"><path class="arm-n" d="M 16 2 L 20 14 L 16 12 L 12 14 Z"/><path class="arm-s" d="M 16 30 L 20 18 L 16 20 L 12 18 Z"/></g></svg>
+        </span>
+        <span class="mini-veleta__label">Tienda</span>
+      </div>
+    </div>
+
+    <span class="right">© <span id="year">2026</span> Veleta · CDMX · v8 · 2026-05-15</span>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    'use strict';
+
+    // ============ BASIC SETUP ============
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    // Fallback: si las libs no cargaron, hacemos reveals con IntersectionObserver
+    function fallbackReveals() {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }});
+      }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    }
+
+    // Nav solid toggle
+    const navEl = document.getElementById("nav");
+    const introEl = document.querySelector(".intro");
+    if (navEl && introEl) {
+      const navObs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { navEl.classList.toggle("solid", !e.isIntersecting); });
+      }, { rootMargin: "-100% 0px 0px 0px", threshold: 0 });
+      navObs.observe(introEl);
+    }
+
+    if (reduced || !window.gsap || !window.Lenis) {
+      fallbackReveals();
+      document.documentElement.classList.add("js-ready");
+      // also: static veleta in transition + static cursor follow off
+      return;
+    }
+
+    // ============ LENIS SMOOTH SCROLL ============
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+      wheelMultiplier: 1
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    // ============ GSAP + ScrollTrigger ============
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // 1. Parallax + fade in foto bg de cada frame
+    document.querySelectorAll('.frame').forEach((frame, i) => {
+      const img = frame.querySelector('.frame__img');
+      const content = frame.querySelector('.frame__content');
+      if (!img || !content) return;
+
+      // Parallax foto bg
+      gsap.fromTo(img, { y: '-15%' }, {
+        y: '15%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: frame,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // Texto entra word-by-word con stagger desde abajo
+      const headline = content.querySelector('.frame__headline');
+      const eyebrow = content.querySelector('.frame__eyebrow');
+      if (headline) {
+        // split headline en words
+        const splitText = (el) => {
+          const text = el.innerHTML;
+          el.innerHTML = text.replace(/(<[^>]+>)|(\S+)/g, (m, tag, word) => tag || `<span class="word">${word}</span>`);
+          return el.querySelectorAll('.word');
+        };
+        const words = splitText(headline);
+        const eyebrowEl = eyebrow;
+        gsap.set([eyebrowEl, ...words], { y: 24, opacity: 0 });
+        ScrollTrigger.create({
+          trigger: frame,
+          start: 'top 70%',
+          onEnter: () => {
+            gsap.to(eyebrowEl, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' });
+            gsap.to(words, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.06, delay: 0.1 });
+          }
+        });
+      }
+    });
+
+    // 2. Dotted journey line se dibuja con strokeDashoffset
+    const journeyLines = document.querySelectorAll('.intro__line path');
+    journeyLines.forEach((p) => {
+      const len = p.getTotalLength();
+      gsap.set(p, { strokeDasharray: p.classList.contains('blue') ? '12 18' : '6 8', strokeDashoffset: 0 });
+      gsap.fromTo(p,
+        { strokeDashoffset: len },
+        {
+          strokeDashoffset: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.intro',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.8
+          }
+        }
+      );
+    });
+
+    // 3. Sigil / veleta gigante entra con scale + rotación
+    const veletaGiantEl = document.getElementById('veleta-giant');
+    if (veletaGiantEl) {
+      gsap.from(veletaGiantEl, {
+        scale: 0.7, opacity: 0, rotation: -25,
+        duration: 1.2, ease: 'back.out(1.4)',
+        scrollTrigger: { trigger: veletaGiantEl, start: 'top 80%' }
+      });
+    }
+
+    // 4. Numbers count-up
+    document.querySelectorAll('.num-cell .big').forEach((el) => {
+      // extract the numeric base
+      const fullText = el.textContent.trim();
+      const match = fullText.match(/^(\d+)/);
+      if (!match) return;
+      const target = parseInt(match[1], 10);
+      const suffix = fullText.slice(match[1].length); // e.g. "+", "años"
+      const original = el.innerHTML;
+      // Wrap number in span
+      el.innerHTML = `<span class="num-val">0</span>${original.includes('<span class="unit">') ? original.slice(original.indexOf('<span class="unit">')) : suffix}`;
+      const valEl = el.querySelector('.num-val');
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        onEnter: () => {
+          const obj = { v: 0 };
+          gsap.to(obj, {
+            v: target,
+            duration: 1.4,
+            ease: 'power2.out',
+            onUpdate: () => { valEl.textContent = Math.round(obj.v); }
+          });
+        }
+      });
+    });
+
+    // 5. Image reveals con clip-path
+    document.querySelectorAll('.section__media, .gallery__item').forEach((el) => {
+      gsap.fromTo(el,
+        { clipPath: 'inset(0 0 100% 0)' },
+        {
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        }
+      );
+    });
+
+    // 6. Word-by-word reveal en section heads
+    document.querySelectorAll('.section__head, .cta__title, .transition__title').forEach((el) => {
+      const text = el.innerHTML;
+      el.innerHTML = text.replace(/(<[^>]+>)|(\S+)/g, (m, tag, word) => tag || `<span class="word">${word}</span>`);
+      const words = el.querySelectorAll('.word');
+      gsap.set(words, { y: 16, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.to(words, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', stagger: 0.05 });
+        }
+      });
+    });
+
+    // 7. Reveal genérico (cualquier elemento .reveal)
+    document.querySelectorAll('.reveal').forEach((el) => {
+      gsap.fromTo(el,
+        { y: 20, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', onEnter: (st) => st.trigger.classList.add('in') }
+        }
+      );
+    });
+
+    // 8. Magnetic CTAs sutil
+    document.querySelectorAll('.cta__btn, .pledge__btn, .nav__cta, .frame__cta').forEach((btn) => {
+      const strength = 14;
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+        const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+        gsap.to(btn, { x: x * strength, y: y * strength, duration: 0.3, ease: 'power3.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+    // ============ CURSOR-VELETA · compás sigue cursor + rosa apunta a dirección de movimiento ============
+    if (isFinePointer) {
+      const cursorEl = document.getElementById('cursor-veleta');
+      const roseEl = document.getElementById('cursor-veleta-rose');
+      if (cursorEl && roseEl) {
+        let mx = window.innerWidth / 2;
+        let my = window.innerHeight / 2;
+        let cx = mx, cy = my;
+        let lastMx = mx, lastMy = my;
+        let currentAngle = 0;
+        let targetAngle = 0;
+        let velX = 0, velY = 0;
+        let firstMove = false;
+
+        // Activamos cursor solo cuando hay primer movimiento real (evita aparecer sobre 0,0)
+        document.addEventListener('mousemove', (e) => {
+          if (!firstMove) {
+            firstMove = true;
+            mx = e.clientX; my = e.clientY;
+            cx = mx; cy = my;
+            lastMx = mx; lastMy = my;
+            document.documentElement.classList.add('cursor-active');
+          }
+          const dx = e.clientX - lastMx;
+          const dy = e.clientY - lastMy;
+          velX = velX * 0.7 + dx * 0.3;
+          velY = velY * 0.7 + dy * 0.3;
+          mx = e.clientX; my = e.clientY;
+          lastMx = mx; lastMy = my;
+
+          // Direction north = up. atan2(vx, -vy) gives angle clockwise from north.
+          const speed = Math.hypot(velX, velY);
+          if (speed > 0.4) {
+            targetAngle = Math.atan2(velX, -velY) * (180 / Math.PI);
+          }
+        }, { passive: true });
+
+        document.addEventListener('mouseleave', () => {
+          targetAngle = 0;
+          cursorEl.style.opacity = 0;
+        });
+        document.addEventListener('mouseenter', () => {
+          cursorEl.style.opacity = '';
+        });
+
+        // Highlight cursor sobre cualquier elemento clickeable
+        const interactive = 'a, button, [role="button"], .gallery__item, .veleta-giant, input[type=submit]';
+        document.addEventListener('mouseover', (e) => {
+          if (e.target.closest && e.target.closest(interactive)) {
+            document.documentElement.classList.add('cursor-over-link');
+          }
+        }, { passive: true });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest && e.target.closest(interactive)) {
+            document.documentElement.classList.remove('cursor-over-link');
+          }
+        }, { passive: true });
+
+        function loop() {
+          cx += (mx - cx) * 0.22;
+          cy += (my - cy) * 0.22;
+          velX *= 0.9;
+          velY *= 0.9;
+          // when velocity tiny, slowly drift target back to north
+          if (Math.hypot(velX, velY) < 0.25) {
+            targetAngle += (0 - targetAngle) * 0.035;
+          }
+          let delta = ((targetAngle - currentAngle) % 360 + 540) % 360 - 180;
+          currentAngle += delta * 0.16;
+
+          cursorEl.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+          roseEl.style.transform = `rotate(${currentAngle}deg)`;
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+
+        // Activar inmediatamente si el mouse ya está dentro al cargar
+        setTimeout(() => {
+          if (!firstMove) {
+            // Fallback: mostrar el compás al centro de la pantalla aunque no haya habido mousemove
+            document.documentElement.classList.add('cursor-active');
+          }
+        }, 800);
+      }
+    }
+
+    // ============ VELETA GIGANTE · gira con ángulo cursor↔centro veleta ============
+    const giantWrap = document.getElementById('veleta-giant');
+    const giantRose = document.getElementById('veleta-giant-rose');
+    if (giantWrap && giantRose) {
+      let targetAng = 0, currentAng = 0;
+      let lastEventTime = performance.now();
+
+      giantWrap.addEventListener('mousemove', (e) => {
+        const r = giantWrap.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        // North = up. atan2(dx, -dy) gives angle from "up" axis clockwise.
+        targetAng = Math.atan2(dx, -dy) * (180 / Math.PI);
+        lastEventTime = performance.now();
+      });
+
+      giantWrap.addEventListener('mouseleave', () => {
+        // when leave, slowly return to 0 (north)
+        targetAng = 0;
+      });
+
+      // gentle idle: when no movement >2.5s, return to north
+      function giantLoop() {
+        const idle = performance.now() - lastEventTime > 2500;
+        if (idle) targetAng += (0 - targetAng) * 0.025;
+        let delta = ((targetAng - currentAng) % 360 + 540) % 360 - 180;
+        currentAng += delta * 0.12;
+        giantRose.style.transform = `rotate(${currentAng}deg)`;
+        requestAnimationFrame(giantLoop);
+      }
+      requestAnimationFrame(giantLoop);
+    }
+
+    // ============ MINI-VELETAS · idle wind oscillation con offsets ============
+    document.querySelectorAll('.mini-veleta').forEach((mv) => {
+      const rose = mv.querySelector('.rose');
+      if (!rose) return;
+      const offset = parseFloat(mv.dataset.veletaIdle || 0);
+      gsap.to(rose, {
+        rotation: 28,
+        duration: 2.2 + offset * 0.18,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: offset * 0.25,
+        transformOrigin: '50% 50%'
+      });
+    });
+    // Hover on mini-veleta: spin around once
+    document.querySelectorAll('.mini-veleta').forEach((mv) => {
+      mv.addEventListener('mouseenter', () => {
+        const rose = mv.querySelector('.rose');
+        if (!rose) return;
+        gsap.to(rose, { rotation: '+=360', duration: 1.2, ease: 'power2.inOut', transformOrigin: '50% 50%' });
+      });
+    });
+
+    document.documentElement.classList.add('js-ready');
+  })();
+</script>
+
+</body>
+</html>
